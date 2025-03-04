@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+body {
+    background-color: #d9ead3;
+    font-family: 'sans-serif';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+:root {
+    --primary: #d9ead3;
+    --secondary: #124f5c;
+    --title-colour: rgb(92, 92, 92);
+}
