@@ -1,11 +1,5 @@
 // npm i to install node modules
 
-function pageLoaded() {
-    console.log('js ready');
-}
-
-pageLoaded();
-
 import { homeNavbar } from './navbar/navbar.js';
 
 document.addEventListener('DOMContentLoaded', async () => {

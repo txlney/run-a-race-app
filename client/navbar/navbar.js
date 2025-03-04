@@ -25,3 +25,17 @@ export async function homeNavbar() {
         console.error('Error loading navbar:', error);
     }
 }
+
+export async function settingsNavbar() {
+    try {
+        const response = await fetch('navbar/settingsNavbar.html');
+        if (response.ok) {
+            const text =  await response.text();
+            document.body.insertAdjacentHTML('afterbegin', text);
+        } else {
+            throw new Error('Network response not ok');
+        }
+    } catch (error) {
+        console.error('Error loading navbar:', error);
+    }
+}

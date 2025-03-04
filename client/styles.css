@@ -32,22 +32,33 @@ body {
     position: relative;
 }
 
-.back-button, .settings-button {
+.back, .settings {
     background: none;
     border: none;
     color: white;
-    font-size: 1.2em;
     cursor: pointer;
 }
 
+.back img, .settings img {
+    height: 50px;
+    width: auto;
+}
+
 .logo {
-    font-size: 1.5em;
-    font-weight: bold;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    cursor: pointer;
 }
 
+.logo img {
+    height: 70px;
+    width: auto;
+}
+
+.logo a:hover, .back a:hover, .settings a:hover {
+    opacity: 0.8;
+}
 
 .split-screen {
     display: flex;
