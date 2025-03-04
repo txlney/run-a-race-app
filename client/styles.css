@@ -1,17 +1,81 @@
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-
 body {
     background-color: #d9ead3;
-    font-family: 'sans-serif';
+    font-family: 'Arial', 'sans-serif';
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    flex-direction: column;
+}
+
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333333;
+    color: white;
+    padding: 10px 20px;
+    height: 50px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.home-nav-bar {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    background-color: #333333;
+    color: white;
+    padding: 10px 20px;
+    height: 50px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.back-button, .settings-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+.split-screen {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.half-screen {
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
+    text-align: center;
+    color: white;
+    font-size: 2em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100vw;
 }
 
-:root {
-    --primary: #d9ead3;
-    --secondary: #124f5c;
-    --title-colour: rgb(92, 92, 92);
+#top-half {
+    background-color: #3498db;
+}
+
+#bottom-half {
+    background-color: #e74c3c;
+}
+
+.half-screen:hover {
+    opacity: 0.9;
 }

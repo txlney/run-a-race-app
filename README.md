@@ -1,2 +1,2 @@
-# run-a-race-app
-Run A Race Coursework
+# Run a Race App - Web Programming CW
+
