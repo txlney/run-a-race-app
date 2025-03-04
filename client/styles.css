@@ -63,7 +63,20 @@ body {
 .split-screen {
     display: flex;
     flex-direction: column;
+    height: calc(100vh - 50px);
+}
+
+.index-half-screen {
     flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    font-size: 2em;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    width: 100vw;
 }
 
 .half-screen {
@@ -75,7 +88,7 @@ body {
     color: white;
     font-size: 2em;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: opacity 0.3s ease;
     width: 100vw;
 }
 
@@ -87,6 +100,92 @@ body {
     background-color: #e74c3c;
 }
 
-.half-screen:hover {
+.index-half-screen:hover {
     opacity: 0.9;
+}
+
+.timer-half-screen {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+#top-half-timer {
+    background-color: #f4f4f4;
+}
+
+#bottom-half-timer {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #cfcfcf;
+    height: 100vh;
+}
+
+.stopwatch-container {
+    text-align: center;
+}
+
+.stopwatch-display {
+    font-size: 5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.stopwatch-controls button {
+    padding: 10px 20px;
+    font-size: 1em;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #3498db;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.stopwatch-controls button:hover {
+    background-color: #2980b9;
+}
+
+#reset {
+    background-color: #e74c3c;
+}
+
+#reset:hover {
+    background-color: #c0392b;
+}
+
+#lap {
+    background-color: #2ecc71;
+}
+
+#lap:hover {
+    background-color: #27ae60;
+}
+
+#results {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#results h2 {
+    font-size: 2em;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+#results-list {
+    font-size: 1.2em;
+    font-weight: bold;
+    flex: 1;
+    width: 100%;
+    overflow-y: auto;
 }

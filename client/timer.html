@@ -8,6 +8,24 @@
     <script type="module" src="timer.js"></script>
 </head>
 <body>
-    <h1>Timer</h1>
+    <div class="split-screen">
+        <div id="top-half-timer" class="timer-half-screen">
+            <div class="stopwatch-container">
+                <div class="stopwatch-display" id="stopwatch">00:00:00</div>
+                <div class="stopwatch-controls">
+                    <button id="startStop">Start</button>
+                    <button id="lap">Lap</button>
+                    <button id="reset">Reset</button>
+                </div>
+            </div>
+        </div>
+        <div id="bottom-half-timer" class="timer-half-screen">
+            <div id="results">
+                <h2>Race Results</h2>
+                <div id="results-list"></div>
+            </div>
+        </div>
+    </div>
+    
 </body>
 </html>
