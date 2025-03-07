@@ -17,6 +17,7 @@ function formatTime(ms) {
     const hrs = Math.floor(ms / 3600000);
     const min = Math.floor((ms % 3600000) / 60000);
     const sec = Math.floor((ms % 60000) / 1000);
+    const mil = Math.floor(ms % 100);
     return `${String(hrs).padStart(2, '0')}:${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
 }
 
@@ -35,7 +36,7 @@ function toggleTimer() {
     } else {
         clearInterval(timerInterval);
         startStopButton.textContent = 'Start';
-        startStopButton.style.backgroundColor = '#3498db';
+        startStopButton.style.backgroundColor = '#2ecc71';
     }
 }
 
@@ -44,7 +45,7 @@ function reset() {
     elapsedTime = 0;
     stopwatchDisplay.textContent = '00:00:00';
     startStopButton.textContent = 'Start';
-    startStopButton.style.backgroundColor = '#3498db';
+    startStopButton.style.backgroundColor = '#2ecc71';
     resTimes = [];
     displayRes();
 }
