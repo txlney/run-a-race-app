@@ -28,14 +28,14 @@ function updateDisplay() {
 }
 
 function toggleTimer() {
-    if (startStopButton.textContent === 'Start') {
+    if (startStopButton.innerHTML.includes('fa-play')) {
         startTime = Date.now() - elapsedTime;
         timerInterval = setInterval(updateDisplay, 100);
-        startStopButton.textContent = 'Stop';
+        startStopButton.innerHTML = '<i class="fas fa-pause"></i>';
         startStopButton.style.backgroundColor = '#e74c3c';
     } else {
         clearInterval(timerInterval);
-        startStopButton.textContent = 'Start';
+        startStopButton.innerHTML = '<i class="fas fa-play"></i>';
         startStopButton.style.backgroundColor = '#2ecc71';
     }
 }
@@ -44,7 +44,7 @@ function reset() {
     clearInterval(timerInterval);
     elapsedTime = 0;
     stopwatchDisplay.textContent = '00:00:00';
-    startStopButton.textContent = 'Start';
+    startStopButton.innerHTML = '<i class="fas fa-play"></i>';
     startStopButton.style.backgroundColor = '#2ecc71';
     resTimes = [];
     displayRes();
@@ -53,22 +53,33 @@ function reset() {
 startStopButton.addEventListener('click', toggleTimer);
 resetButton.addEventListener('click', reset);
 
+// Results
+
+const positionsList = document.querySelector('#positions-list');
+const timesList = document.querySelector('#times-list');
 let resTimes = [];
 
 function displayRes() {
-    const resContainer = document.querySelector('#results-list');
-    resContainer.innerHTML = '';
+    positionsList.innerHTML = '';
+    timesList.innerHTML = '';
 
-    resTimes.forEach((resTime, i) => {
-        const resEl = document.createElement('div');
-        resEl.textContent = `${i + 1}. ${formatTime(resTime)}`;
-        resContainer.appendChild(resEl);
+    resTimes.forEach(res => {
+        const positionEl = document.createElement('div');
+        positionEl.textContent = `${res.position}.`;
+        positionsList.appendChild(positionEl);
+
+        const timeEl = document.createElement('div');
+        timeEl.textContent = `${formatTime(res.time)}`;
+        timesList.appendChild(timeEl);
     })
 }
 
 function recordRes() {
-    const resTime = elapsedTime;
-    resTimes.push(resTime);
+    const res = {
+        position: resTimes.length + 1,
+        time: elapsedTime,
+    };
+    resTimes.push(res);
     displayRes();
 }
 

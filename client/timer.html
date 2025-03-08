@@ -5,30 +5,34 @@
     <meta name="viewport" content="width=device-width, inital-scale=1.0">
     <title>Timer</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script type="module" src="timer.js"></script>
 </head>
 <body>
-    <div class="split-screen">
-        <div id="top-half-timer" class="timer-half-screen">
-            <div class="stopwatch-container">
-                <div class="stopwatch-display" id="stopwatch">00:00:00</div>
-                <div class="stopwatch-controls">
-                    <button id="startStop">Start</button>
-                    <button id="lap">Lap</button>
-                    <button id="reset">Reset</button>
-                </div>
-            </div>
-        </div>
-        <div id="bottom-half-timer" class="timer-half-screen">
-            <div id="results-header">
-                <h2>Race Results</h2>
-                <button id="exportResults">Export Results</button>
-            </div>
-            <div id="results">
-                <div id="results-list"></div>
-            </div>
-        </div>
+
+    <div class="timer-display">
+        <div class="stopwatch-display" id="stopwatch">00:00:00</div>
+        <button id="reset">Reset</button>
     </div>
     
+    <div class="results-section">
+        <div class="results-header">
+            <h2>Race Results</h2>
+        </div>
+        <div class="results-list-container">
+            <div class="positions-list" id="positions-list"></div>
+            <div class="times-list" id="times-list"></div>
+        </div>
+    </div>
+
+    <footer class="timer-footer">
+        <button id="startStop" title="Start/Stop">
+            <i class="fas fa-play"></i>
+        </button>
+        <button id="lap" title="Lap">
+            <i class="fas fa-stopwatch"></i>
+        </button>
+    </footer>
+
 </body>
 </html>
