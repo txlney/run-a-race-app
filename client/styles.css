@@ -158,20 +158,56 @@ body {
 
 .results-header {
     background-color: #262626;
-    padding: 10px 20px;
+    padding: 20px 20px;
     text-align: center;
+    color: #f4f4f4;
 }
 
 .results-header h2 {
-    color: #f4f4f4;
     margin: 0;
+}
+
+.results-header button {
+    color: #063555;
+    background-color: #3498db;
+    border-radius: 3px;
+    padding: 5px 15px;
+    border: none;
+    height: 28px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.results-header button:hover {
+    background-color: #2980b9;
 }
 
 .results-list-container {
     display: flex;
-    padding: 20px;
-    gap: 20px;
+    flex-direction: column;
+    padding: 15px;
+    gap: 10px;
     overflow-y: auto;
+}
+
+.result-card {
+    background: rgb(36, 36, 36);
+    border-radius: 8px;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.position {
+    font-weight: bold;
+    color: #e7ca25;
+}
+
+.time {
+    font-weight: bold;
+    color: white;
 }
 
 .positions-list .times-list {

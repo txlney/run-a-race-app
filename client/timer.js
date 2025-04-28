@@ -10,6 +10,7 @@ let timerInterval;
 
 const stopwatchDisplay = document.querySelector('#stopwatch');
 const startStopButton = document.querySelector('#startStop');
+const raceResultsHeader = document.querySelector('#results-header');
 const resetButton = document.querySelector('#reset');
 const lapButton = document.querySelector('#lap');
 
@@ -33,10 +34,16 @@ function toggleTimer() {
         timerInterval = setInterval(updateDisplay, 100);
         startStopButton.innerHTML = '<i class="fas fa-pause"></i>';
         startStopButton.style.backgroundColor = '#e74c3c';
+        raceResultsHeader.innerHTML = '<h2>Race Results</h2>';
     } else {
         clearInterval(timerInterval);
         startStopButton.innerHTML = '<i class="fas fa-play"></i>';
         startStopButton.style.backgroundColor = '#2ecc71';
+        if (resTimes.length > 0) {
+            raceResultsHeader.innerHTML = '<button id="export" title="Export Results">Export Results</button>';
+            const exportButton = document.querySelector('#export');
+            exportButton.addEventListener('click', exportResults);
+        }
     }
 }
 
@@ -46,6 +53,7 @@ function reset() {
     stopwatchDisplay.textContent = '00:00:00';
     startStopButton.innerHTML = '<i class="fas fa-play"></i>';
     startStopButton.style.backgroundColor = '#2ecc71';
+    raceResultsHeader.innerHTML = '<h2>Race Results</h2>';
     resTimes = [];
     displayRes();
 }
@@ -55,22 +63,20 @@ resetButton.addEventListener('click', reset);
 
 // Results
 
-const positionsList = document.querySelector('#positions-list');
-const timesList = document.querySelector('#times-list');
+const resList = document.querySelector('#results-list');
 let resTimes = [];
 
 function displayRes() {
-    positionsList.innerHTML = '';
-    timesList.innerHTML = '';
+    resList.innerHTML = '';
 
     resTimes.forEach(res => {
-        const positionEl = document.createElement('div');
-        positionEl.textContent = `${res.position}.`;
-        positionsList.appendChild(positionEl);
-
-        const timeEl = document.createElement('div');
-        timeEl.textContent = `${formatTime(res.time)}`;
-        timesList.appendChild(timeEl);
+        const card = document.createElement('div');
+        card.className = 'result-card';
+        card.innerHTML = `
+            <span class="position">${res.position}.</span>
+            <span class="time">${formatTime(res.time)}</span>
+        `;
+        resList.appendChild(card);
     })
 }
 
@@ -84,3 +90,34 @@ function recordRes() {
 }
 
 lapButton.addEventListener('click', recordRes);
+
+async function exportResults() {
+    const isConfirmed = confirm("Are you sure you want to export results?");
+    if (isConfirmed) {
+        console.log('Export started.');
+        try {
+            const dataToSend = {
+                raceId: Date.now(),
+                results: resTimes
+            };
+            const response = await fetch('http://localhost:8080/api/results', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dataToSend)
+            });
+            if (response.ok) {
+                alert('Results exported successfully.');
+            } else {
+                throw new Error('Server responded with an error.');
+            }
+        } catch (error) {
+            console.error('Export failed:', error);
+            alert('Export failed. Check console for details');
+        }
+    } else {
+        console.log('Export cancelled.');
+    }
+    
+}
