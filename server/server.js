@@ -37,6 +37,8 @@ app.post('/api/results', (req, res) => {
     res.status(200).send('Results saved.');
 });
 
+// list of all races
+
 app.get('/api/races', (req, res) => {
     try {
         const files = fs.readdirSync(path.join(__dirname, 'data'));
@@ -55,6 +57,21 @@ app.get('/api/races', (req, res) => {
 
     } catch (error) {
         res.status(500).send('Error loading race list');
+    }
+});
+
+// details for each race
+
+app.get('/api/results/:raceId', (req, res) => {
+    try {
+        const filePath = path.join(__dirname, 'data', `race-${req.params.raceId}.json`);
+        if (!fs.existsSync(filePath)) {
+            return res.status(404).send('Race not found');
+        }
+        const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        res.json(data);
+    } catch (error) {
+        res.status(500).send('Error loading race details');
     }
 });
 

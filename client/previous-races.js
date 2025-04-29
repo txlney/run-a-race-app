@@ -11,22 +11,33 @@ async function loadRaceList() {
 
     listEl.innerHTML = races.map(race =>
         `<li>
-            <button onclick="loadRaceDetails('${race.id}')">
+            <a href="race-details.html?id=${race.id}" class="race-link">
                 Race ${race.id} - ${race.date} ${race.time}
-            </button>
+            </a>
         </li>`
     ).join('');
 }
 
-async function loadRaceDetails(raceId) {
-    const response = await fetch(`/api/results/${raceId}`);
-    const data = await response.json();
-    document.querySelector('#race-details').innerHTML = `
-        <h3>Race ${raceId} Results</h3>
-        <ul>
-            ${data.results.map(result => `<li>${result.runner}: ${result.time}</li>`).join('')}
-        </ul>
-    `;
+window.loadRaceDetails = async function(raceId) {
+    try {
+        console.log('Fetching race:', raceId);
+        const response = await fetch(`/api/results/${raceId}`);
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
+
+        const data = await response.json();
+        console.log('Received data:', data);
+
+        document.querySelector('#race-details').innerHTML = `
+            <h3>Race ${raceId} Results</h3>
+            <ul>
+                ${data.results.map(result => `<li>${result.runner}: ${result.time}</li>`).join('')}
+            </ul>
+        `;
+    } catch (error) {
+        console.error('Error in loadRaceDetails:', error);
+        document.querySelector('#race-details').innerHTML = 
+            '<p>Error loading results. Check console for details.</p>';
+    }
 }
 
 loadRaceList();
