@@ -37,20 +37,24 @@ app.post('/api/results', (req, res) => {
     res.status(200).send('Results saved.');
 });
 
-app.get('/api/races', (req, res) => { // explain this function more detailed
+app.get('/api/races', (req, res) => {
     try {
-        const files = fs.readFileSync(path.join(__dirname, 'data'));
+        const files = fs.readdirSync(path.join(__dirname, 'data'));
+
         const races = files.map(file => {
-            const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', file), 'utf8'));
+            const filePath = path.join(__dirname, 'data', file);
+            const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
             return {
                 id: file.replace('race-', '').replace('.json', ''),
                 date: new Date(data.timestamp).toLocaleDateString(),
-                time: new Date(data.timestamp).toLocaleDateString()
+                time: new Date(data.timestamp).toLocaleTimeString()
             };
         })
+
         res.json(races);
+
     } catch (error) {
-        res.status(500).send('Error loading race list'); // what does the 500 mean
+        res.status(500).send('Error loading race list');
     }
 });
 
