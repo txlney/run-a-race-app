@@ -18,12 +18,16 @@ if (!fs.existsSync(dataDir)) {
 }
 
 app.post('/api/results', (req, res) => {
-    const { raceId, results } = req.body;
-    console.log(`Received race ${raceId} with results: ${results}`);
+    const raceData = {
+        timestamp: new Date().toISOString(),
+        results: req.body.results
+    };
+    const raceId = req.body.raceId;
+    console.log(`Received race ${raceId} with results: ${raceData.results}`);
     
     try {
         const filePath = path.join(__dirname, 'data', `race-${raceId}.json`);
-        fs.writeFileSync(filePath, JSON.stringify(results, null, 2));
+        fs.writeFileSync(filePath, JSON.stringify(raceData, null, 2));
     } catch (error) {
         console.log('Error saving results:', error);
         res.status(500).send('Server error when saving results');
@@ -31,6 +35,23 @@ app.post('/api/results', (req, res) => {
     
 
     res.status(200).send('Results saved.');
+});
+
+app.get('/api/races', (req, res) => { // explain this function more detailed
+    try {
+        const files = fs.readFileSync(path.join(__dirname, 'data'));
+        const races = files.map(file => {
+            const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', file), 'utf8'));
+            return {
+                id: file.replace('race-', '').replace('.json', ''),
+                date: new Date(data.timestamp).toLocaleDateString(),
+                time: new Date(data.timestamp).toLocaleDateString()
+            };
+        })
+        res.json(races);
+    } catch (error) {
+        res.status(500).send('Error loading race list'); // what does the 500 mean
+    }
 });
 
 const port = 8080;

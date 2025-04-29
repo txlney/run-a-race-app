@@ -14,5 +14,5 @@ topHalf.addEventListener('click', () => {
 });
 
 bottomHalf.addEventListener('click', () => {
-    window.location.href = 'page2.html';
+    window.location.href = 'previous-races.html';
 });

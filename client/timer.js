@@ -92,7 +92,7 @@ function recordRes() {
 lapButton.addEventListener('click', recordRes);
 
 async function exportResults() {
-    const isConfirmed = confirm("Are you sure you want to export results?");
+    const isConfirmed = confirm("Are you sure you want to export results?\nThis action cannot be undone");
     if (isConfirmed) {
         console.log('Export started.');
         try {
