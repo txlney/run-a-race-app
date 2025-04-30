@@ -1,4 +1,5 @@
 import { loadNavbar } from './navbar/navbar.js';
+import { formatTime } from './utils.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
     loadNavbar();
@@ -13,14 +14,6 @@ const startStopButton = document.querySelector('#startStop');
 const raceResultsHeader = document.querySelector('#results-header');
 const resetButton = document.querySelector('#reset');
 const lapButton = document.querySelector('#lap');
-
-function formatTime(ms) {
-    const hrs = Math.floor(ms / 3600000);
-    const min = Math.floor((ms % 3600000) / 60000);
-    const sec = Math.floor((ms % 60000) / 1000);
-    const mil = Math.floor(ms % 100);
-    return `${String(hrs).padStart(2, '0')}:${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
-}
 
 function updateDisplay() {
     const currentTime = Date.now();
@@ -74,7 +67,7 @@ function displayRes() {
         card.className = 'result-card';
         card.innerHTML = `
             <span class="position">${res.position}.</span>
-            <span class="time">${formatTime(res.time)}</span>
+            <span class="time">${res.time}</span>
         `;
         resList.appendChild(card);
     })
@@ -83,7 +76,7 @@ function displayRes() {
 function recordRes() {
     const res = {
         position: resTimes.length + 1,
-        time: elapsedTime,
+        time: formatTime(elapsedTime),
     };
     resTimes.push(res);
     displayRes();
@@ -96,8 +89,9 @@ async function exportResults() {
     if (isConfirmed) {
         console.log('Export started.');
         try {
+            const tempId = Date.now().toString();
             const dataToSend = {
-                raceId: Date.now(),
+                raceId: parseFloat(tempId.slice(tempId.length - 5)),
                 results: resTimes
             };
             const response = await fetch('http://localhost:8080/api/results', {

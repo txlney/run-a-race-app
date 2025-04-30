@@ -243,7 +243,7 @@ body {
     cursor: pointer;
     background-color: #2abb67;
     color: #f4f4f4;
-    transition: background-color 0.3s ease;
+    transition: all 0.2s;
 }
 
 .timer-footer button:hover {
@@ -256,4 +256,43 @@ body {
 
 #lap:hover {
     background-color: #2980b9;
+}
+
+/* previous races */
+
+#race-history {
+    padding: 15px;
+}
+
+#race-history h2 {
+    text-align: center;
+}
+
+.race-list {
+    justify-content: center;
+    display: flex;
+}
+
+.race-btn {
+    font-family: 'Arial';
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #262626;
+    width: 100%;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    background: #d4d4d4;
+    border: none;
+    border-radius: 6px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.race-btn:hover {
+    background: #c5c5c5;
+    transform: translateY(-2px);
 }

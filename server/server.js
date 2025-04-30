@@ -2,6 +2,7 @@ import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { formatDate } from '../client/utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,7 +49,7 @@ app.get('/api/races', (req, res) => {
             const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
             return {
                 id: file.replace('race-', '').replace('.json', ''),
-                date: new Date(data.timestamp).toLocaleDateString(),
+                date: formatDate(new Date(data.timestamp).toLocaleDateString()),
                 time: new Date(data.timestamp).toLocaleTimeString()
             };
         })
