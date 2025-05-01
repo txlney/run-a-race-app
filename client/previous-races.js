@@ -18,9 +18,10 @@ async function loadRaceList() {
         </div>`
     ).join('');
 
-    raceList.addEventListener('click', async elem => {
-        if (elem.target.classList.contains('race-btn')) {
-            const raceId = elem.target.dataset.id;
+    raceList.addEventListener('click', event => {
+        const button = event.target.closest('.race-btn');
+        if (button) {
+            const raceId = button.dataset.id;
             window.location.href = `race-details.html?id=${raceId}`;
         }
     });
