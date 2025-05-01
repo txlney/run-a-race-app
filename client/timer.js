@@ -15,12 +15,14 @@ const raceResultsHeader = document.querySelector('#results-header');
 const resetButton = document.querySelector('#reset');
 const lapButton = document.querySelector('#lap');
 
+// update stopwatch
 function updateDisplay() {
     const currentTime = Date.now();
     elapsedTime = currentTime - startTime;
     stopwatchDisplay.textContent = formatTime(elapsedTime);
 }
 
+// start/stop button functions
 function toggleTimer() {
     if (startStopButton.innerHTML.includes('fa-play')) {
         startTime = Date.now() - elapsedTime;
@@ -40,6 +42,7 @@ function toggleTimer() {
     }
 }
 
+// reset stopwatch and results display
 function reset() {
     clearInterval(timerInterval);
     elapsedTime = 0;
@@ -54,11 +57,10 @@ function reset() {
 startStopButton.addEventListener('click', toggleTimer);
 resetButton.addEventListener('click', reset);
 
-// Results
-
 const resList = document.querySelector('#results-list');
 let resTimes = [];
 
+// display live results from the race
 function displayRes() {
     resList.innerHTML = '';
 
@@ -73,6 +75,7 @@ function displayRes() {
     })
 }
 
+// record a result
 function recordRes() {
     const res = {
         position: resTimes.length + 1,
@@ -84,16 +87,21 @@ function recordRes() {
 
 lapButton.addEventListener('click', recordRes);
 
+// export results to server
 async function exportResults() {
-    const isConfirmed = confirm("Are you sure you want to export results?\nThis action cannot be undone");
+    const isConfirmed = confirm("Are you sure you want to export results?");
     if (isConfirmed) {
         console.log('Export started.');
         try {
+
+            // generate race id and gather data to send
             const tempId = Date.now().toString();
             const dataToSend = {
                 raceId: parseFloat(tempId.slice(tempId.length - 5)),
                 results: resTimes
             };
+
+            // post race data to server
             const response = await fetch('http://localhost:8080/api/results', {
                 method: 'POST',
                 headers: {
@@ -101,6 +109,7 @@ async function exportResults() {
                 },
                 body: JSON.stringify(dataToSend)
             });
+            
             if (response.ok) {
                 alert('Results exported successfully.');
             } else {

@@ -12,12 +12,14 @@ const app = express();
 app.use(express.static('client'));
 app.use(express.json());
 
+// check existence of 'data' directory and create if needed
 const dataDir = path.join(__dirname, 'data');
 if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir);
     console.log('Created data directory');
 }
 
+// receive exported results
 app.post('/api/results', (req, res) => {
     const raceData = {
         timestamp: new Date().toISOString(),
@@ -27,6 +29,8 @@ app.post('/api/results', (req, res) => {
     console.log(`Received race ${raceId} with results: ${raceData.results}`);
     
     try {
+
+        // write results to 'data' directory
         const filePath = path.join(__dirname, 'data', `race-${raceId}.json`);
         fs.writeFileSync(filePath, JSON.stringify(raceData, null, 2));
     } catch (error) {
@@ -38,8 +42,7 @@ app.post('/api/results', (req, res) => {
     res.status(200).send('Results saved.');
 });
 
-// list of all races
-
+// retrieve list of all races
 app.get('/api/races', (req, res) => {
     try {
         const files = fs.readdirSync(path.join(__dirname, 'data'));
@@ -61,8 +64,7 @@ app.get('/api/races', (req, res) => {
     }
 });
 
-// details for each race
-
+// retrieve details for each race
 app.get('/api/results/:raceId', (req, res) => {
     try {
         const filePath = path.join(__dirname, 'data', `race-${req.params.raceId}.json`);

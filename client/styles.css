@@ -8,6 +8,10 @@ body {
     flex-direction: column;
 }
 
+.hidden {
+    display: none;
+}
+
 /* Navigation bar */
 
 .nav-bar {
@@ -309,6 +313,19 @@ body {
 .race-btn h4 {
     margin: 0;
     font-weight: normal;
+}
+
+#no-races-msg {
+    text-align: center;
+    color: #919191;
+    font-size: 0.8em;
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateY(-30%);
+    transform: translateX(-50%);
+    overflow: visible;
 }
 
 /* race details */

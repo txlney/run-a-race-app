@@ -1,3 +1,4 @@
+// format time from ms to XX:XX:XX
 export function formatTime(ms) {
     const hrs = Math.floor(ms / 3600000);
     const min = Math.floor((ms % 3600000) / 60000);
@@ -6,6 +7,7 @@ export function formatTime(ms) {
     return `${String(hrs).padStart(2, '0')}:${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
 }
 
+// format date from DD/MM/YYYY to 'XX Month, XXXX'
 export function formatDate(dateString) {
     const [day, month, year] = dateString.split('/');
     const date = new Date(year, month - 1, day);
