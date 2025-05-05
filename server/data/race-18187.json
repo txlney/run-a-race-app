@@ -1,0 +1,33 @@
+{
+  "timestamp": "2025-05-05T20:58:38.196Z",
+  "results": [
+    {
+      "position": 1,
+      "time": "00:00:02"
+    },
+    {
+      "position": 2,
+      "time": "00:00:03"
+    },
+    {
+      "position": 3,
+      "time": "00:00:03"
+    },
+    {
+      "position": 4,
+      "time": "00:00:04"
+    },
+    {
+      "position": 5,
+      "time": "00:00:04"
+    },
+    {
+      "position": 6,
+      "time": "00:00:05"
+    },
+    {
+      "position": 7,
+      "time": "00:00:07"
+    }
+  ]
+}

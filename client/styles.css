@@ -316,6 +316,7 @@ body {
 }
 
 #no-races-msg {
+    white-space: nowrap;
     text-align: center;
     color: #919191;
     font-size: 0.8em;

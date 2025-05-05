@@ -19,8 +19,11 @@ if (!fs.existsSync(dataDir)) {
     console.log('Created data directory');
 }
 
+let lastResultUpdate = Date.now();
+
 // receive exported results
 app.post('/api/results', (req, res) => {
+    lastResultUpdate = Date.now();
     const raceData = {
         timestamp: new Date().toISOString(),
         results: req.body.results
@@ -81,4 +84,11 @@ app.get('/api/results/:raceId', (req, res) => {
 const port = 8080;
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
+});
+
+app.get('/api/results/updates', (req, res) => {
+    res.json({
+        lastModified: lastResultUpdate,
+        activeRaces: fs.readdirSync('./data').length
+    });
 });
