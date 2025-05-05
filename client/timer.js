@@ -170,20 +170,3 @@ window.addEventListener('online', async () => {
         }
     }
 });
-
-let lastKnownUpdate = 0;
-
-async function checkForUpdates() {
-    try {
-        const response = await fetch('/api/results/updates');
-        const { lastModified } = await response.json();
-
-        if (lastModified > lastKnownUpdate) {
-            lastKnownUpdate = lastModified;
-            displayRes();
-            showNotification('New results available');
-        }
-    } catch (error) {
-        console.debug('Polling error (normal if offline):', error);
-    }
-}
