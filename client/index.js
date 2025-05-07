@@ -1,8 +1,17 @@
-// npm i to install node modules
+import { homeNavbar } from './js/navbar.js';
 
-import { homeNavbar } from './navbar/navbar.js';
+const pages = [
+    { screen: 'home', title: 'Home' },
+    { screen: 'timer', title: 'Timer' },
+    { screen: 'previous-races', title: 'Previous Races' }
+];
+
+let currentScreen = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
+    await loadScreens();
+    setupNavigation();
+    navigateTo(window.location.pathname);
     homeNavbar();
 });
 

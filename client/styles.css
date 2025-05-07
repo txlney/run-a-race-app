@@ -1,24 +1,44 @@
+:root {
+    --navbar-background: #333333;
+    --navbar-height: 70px;
+    --white-text: #f4f4f4;
+
+}
+
 body {
-    background-color: #f4f4f4;
     font-family: 'Arial', 'sans-serif';
-    display: flex;
-    height: 100vh;
     margin: 0;
     padding: 0;
-    flex-direction: column;
+    overscroll-behavior: none;
+}
+
+#app {
+    flex: 1;
+    height: calc(100vh - 50px);
+    position: relative;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: hidden;
 }
 
 .hidden {
-    display: none;
+    display: none !important;
+    visibility: hidden !important;
 }
 
 /* Navigation bar */
 
-.nav-bar {
+.app-navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #333333;
+    background-color: var(--navbar-background);
     color: #f4f4f4;
     padding: 10px 20px;
     height: 50px;
@@ -26,26 +46,14 @@ body {
     position: relative;
 }
 
-.home-nav-bar {
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    background-color: #333333;
-    color: #f4f4f4;
-    padding: 10px 20px;
-    height: 50px;
-    flex-shrink: 0;
-    position: relative;
-}
-
-.back, .settings {
+.nav-button {
     background: none;
     border: none;
     color: #f4f4f4;
     cursor: pointer;
 }
 
-.back img, .settings img {
+#back img, #settings img {
     height: 50px;
     width: auto;
 }
@@ -68,10 +76,22 @@ body {
 
 /* Index */
 
+#screen-home {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
 .split-screen {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 50px);
+    height: calc(100vh - var(--navbar-height));
+    width: 100vw;
 }
 
 .index-half-screen {
@@ -80,11 +100,13 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: #333333;
+    color: var(--navbar-background);
     font-size: 10em;
     cursor: pointer;
     transition: opacity 0.3s ease;
-    width: 100vw;
+    width: 100%;
+    min-height: 0;
+    overflow: hidden;
 }
 
 #flag {
@@ -118,19 +140,26 @@ body {
 
 /* Timer */
 
+#screen-timer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 .timer-display {
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 40px;
+    padding: 20px 40px;
     background-color: #f4f4f4;
 }
 
 .stopwatch-display {
     font-size: 5em;
     font-weight: bold;
-    color: #333333;
+    color: var(--navbar-background);
 }
 
 .timer-display button {
@@ -141,7 +170,7 @@ body {
     margin: 10px;
     font-size: 0.9em;
     font-weight: bold;
-    color: #333333;
+    color: var(--navbar-background);
     transition: background-color 0.3s ease;
     cursor: pointer;
 }
@@ -154,7 +183,8 @@ body {
 
 .results-section {
     flex: 1;
-    background-color: #333333;
+    min-height: 0;
+    background-color: var(--navbar-background);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -232,7 +262,8 @@ body {
 
 .timer-footer {
     display: flex;
-    background-color: #333333;
+    flex: 0 0 auto;
+    background-color: var(--navbar-background);
     position: sticky;
     bottom: 0;
     z-index: 1;

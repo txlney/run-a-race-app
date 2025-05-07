@@ -18,3 +18,12 @@ export function formatDate(dateString) {
     const formattedDate = `${parseInt(day, 10)} ${months[date.getMonth()]} ${year}`;
     return formattedDate;
 }
+
+// hide and show elements
+export function hideElement(selector) {
+    document.querySelector(selector)?.classList.add('hidden');
+}
+
+export function showElement(selector) {
+    document.querySelector(selector).classList.remove('hidden');
+}
