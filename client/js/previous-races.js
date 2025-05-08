@@ -7,6 +7,10 @@ export function initPreviousRaces() {
             const raceList = document.querySelector('#race-list');
             const noRacesMsg = document.querySelector('#no-races-msg');
 
+            if (!raceList || !noRacesMsg) {
+                throw new Error('Required DOM elements missing');
+            }
+
             // display 'no races found' message if no races exist
             if (races.length === 0) {
                 noRacesMsg.classList.remove('hidden');
@@ -24,21 +28,22 @@ export function initPreviousRaces() {
                     </div>`
                 ).join('');
             
-                // event listener to direct to 'race-details' page
-                raceList.addEventListener('click', event => {
-                    const button = event.target.closest('.race-btn');
-                    if (button) {
-                        const raceId = button.dataset.id;
-                        window.appRoutes[`/race-details/${raceId}`]?.() || loadRaceDetails(raceId);
-                    }
-                });
+                raceList.addEventListener('click', handleRaceButton);
             }
         } catch (error) {
             console.error('Error loading races:', error);
             document.querySelector('#no-races-msg h2').textContent = 'Error loading races.';
             document.querySelector('#no-races-msg h2').classList.remove('hidden');
         }
-        
+    }
+
+    function handleRaceButton(event) {
+        const button = event.target.closest('.race-btn');
+        if (button) {
+            const raceId = button.dataset.id;
+            window.appRoutes[`/race-details`](raceId);
+            history.pushState({ raceId }, '', `/race-details/${raceId}`);
+        }
     }
 
     loadRaceList();

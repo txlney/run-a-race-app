@@ -13,14 +13,14 @@ import { fetchRaceData } from './data.js';
         '/': () => loadPage('home'),
         '/timer': () => loadPage('timer'),
         '/previous-races': () => loadPage('previous-races'),
-        '/race-details/:id': (id) => loadRaceDetails(id)
+        '/race-details': (id) => loadPage('race-details', id)
     };
 
     const initialPath = window.location.pathname;
     appRoutes[initialPath]?.() || appRoutes['/']();
 })();
 
-async function loadPage(page) {
+async function loadPage(page, param) {
 
     try {
         const response = await fetch(`includes/${page}.inc`);
@@ -43,7 +43,7 @@ async function loadPage(page) {
                 break;
             case 'race-details':
                 console.log('Loading race details...');
-                initRaceDetails();
+                initRaceDetails(param);
                 break;
         }
 
@@ -77,35 +77,6 @@ function setupHomePage() {
     previousRacesPage.addEventListener('click', () => {
         appRoutes['/previous-races']();
     });
-}
-
-async function loadRaceDetails(raceId) {
-    try {
-        const response = await fetch('includes/race-details.inc');
-        document.querySelector('#app').innerHTML = await response.text();
-
-        const race = await fetchRaceData(raceId);
-        displayRaceDetails(race);
-
-        history.pushState({}, '', `/race-details/${raceId}`);
-    } catch (error) {
-        console.error('Error loading race details:', error);
-    }
-}
-
-function displayRaceDetails(race) {
-    if (!race) return;
-
-    document.querySelector('#race-title').textContent = 
-        `Race ${race.id} - ${new Date(race.date).toLocaleDateString()}`;
-
-    const container = document.querySelector('#race-details-container');
-    container.innerHTML = race.results.map(result => `
-        <div class="result-row">
-            <span>${result.position}</span>
-            <span>${formatTime(result.time)}</span>
-        </div>
-    `).join('');
 }
 
 window.addEventListener('popstate', () => {

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-05-08T14:20:10.117Z",
+  "timestamp": "2025-05-08T15:13:36.099Z",
   "results": [
     {
       "position": 1,
@@ -15,18 +15,10 @@
     },
     {
       "position": 4,
-      "time": "00:00:00"
+      "time": "00:00:01"
     },
     {
       "position": 5,
-      "time": "00:00:01"
-    },
-    {
-      "position": 6,
-      "time": "00:00:01"
-    },
-    {
-      "position": 7,
       "time": "00:00:01"
     }
   ]
