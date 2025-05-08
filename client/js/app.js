@@ -1,5 +1,8 @@
 import { initTimer } from './timer.js';
 import { initNavbar, loadNavbar } from './navbar.js';
+import { initPreviousRaces } from './previous-races.js';
+import { initRaceDetails } from './race-details.js';
+import { fetchRaceData } from './data.js';
 
 (async () => {
 
@@ -9,7 +12,8 @@ import { initNavbar, loadNavbar } from './navbar.js';
     window.appRoutes = {
         '/': () => loadPage('home'),
         '/timer': () => loadPage('timer'),
-        '/previous-races': () => loadPage('previous-races')
+        '/previous-races': () => loadPage('previous-races'),
+        '/race-details/:id': (id) => loadRaceDetails(id)
     };
 
     const initialPath = window.location.pathname;
@@ -17,25 +21,29 @@ import { initNavbar, loadNavbar } from './navbar.js';
 })();
 
 async function loadPage(page) {
-    console.log(`Attempting to load: ${page}.inc`);
 
     try {
         const response = await fetch(`includes/${page}.inc`);
-        console.log('Fetch response:', response.status);
 
         const html = await response.text();
         document.querySelector('#app').innerHTML = html;
 
         switch(page) {
             case 'timer':
-                console.log('Initializing timer...');
+                console.log('Loading timer...');
                 initTimer();
                 break;
             case 'home':
-                console.log('Initializing home...');
+                console.log('Loading home...');
                 setupHomePage();
                 break;
             case 'previous-races':
+                console.log('Loading previous races...');
+                initPreviousRaces();
+                break;
+            case 'race-details':
+                console.log('Loading race details...');
+                initRaceDetails();
                 break;
         }
 
@@ -46,7 +54,7 @@ async function loadPage(page) {
         }
 
         document.querySelector('#back').classList.toggle('hidden', page === 'home');
-        document.querySelector('#settings').classList.toggle('hidden', page === 'settings');
+        document.querySelector('#settings').classList.toggle('visible', page === 'settings');
 
     } catch (error) {
         console.error(`Failed to load ${page}:`, error);
@@ -69,6 +77,35 @@ function setupHomePage() {
     previousRacesPage.addEventListener('click', () => {
         appRoutes['/previous-races']();
     });
+}
+
+async function loadRaceDetails(raceId) {
+    try {
+        const response = await fetch('includes/race-details.inc');
+        document.querySelector('#app').innerHTML = await response.text();
+
+        const race = await fetchRaceData(raceId);
+        displayRaceDetails(race);
+
+        history.pushState({}, '', `/race-details/${raceId}`);
+    } catch (error) {
+        console.error('Error loading race details:', error);
+    }
+}
+
+function displayRaceDetails(race) {
+    if (!race) return;
+
+    document.querySelector('#race-title').textContent = 
+        `Race ${race.id} - ${new Date(race.date).toLocaleDateString()}`;
+
+    const container = document.querySelector('#race-details-container');
+    container.innerHTML = race.results.map(result => `
+        <div class="result-row">
+            <span>${result.position}</span>
+            <span>${formatTime(result.time)}</span>
+        </div>
+    `).join('');
 }
 
 window.addEventListener('popstate', () => {
