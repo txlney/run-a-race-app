@@ -92,3 +92,7 @@ app.get('/api/results/updates', (req, res) => {
         activeRaces: fs.readdirSync('./data').length
     });
 });
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/index.html'));
+});

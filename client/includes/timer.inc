@@ -6,7 +6,7 @@
 
     <div class="results-section">
         <div class="results-header" id="results-header">
-            <h2>Race Results</h2>
+            <button id="export" title="Export Results">Export Results</button>
         </div>
         <div class="results-list-container" id="results-list">
         </div>

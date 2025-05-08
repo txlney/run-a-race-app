@@ -14,6 +14,7 @@ export function initTimer() {
     const resetButton = document.querySelector('#reset');
     const lapButton = document.querySelector('#lap');
     const resList = document.querySelector('#results-list');
+    const exportButton = document.querySelector('#export');
 
     function updateDisplay() {
         const currentTime = Date.now();
@@ -27,16 +28,10 @@ export function initTimer() {
             timerInterval = setInterval(updateDisplay, 100);
             startStopButton.innerHTML = '<i class="fas fa-pause"></i>';
             startStopButton.style.backgroundColor = '#e74c3c';
-            raceResultsHeader.innerHTML = '<h2>Race Results</h2>';
         } else {
             clearInterval(timerInterval);
             startStopButton.innerHTML = '<i class="fas fa-play"></i>';
             startStopButton.style.backgroundColor = '#2abb67';
-            if (resTimes.length > 0) {
-                raceResultsHeader.innerHTML = '<button id="export" title="Export Results">Export Results</button>';
-                const exportButton = document.querySelector('#export');
-                exportButton.addEventListener('click', exportResults);
-            }
             wasRunning = false;
             elapsedTime = Date.now() - startTime;
         }
@@ -80,6 +75,11 @@ export function initTimer() {
     }
 
     async function exportResults() {
+        if (resTimes.length === 0) {
+            alert('No results to export');
+            return;
+        }
+
         const isConfirmed = confirm("Are you sure you want to export results?");
         if (!isConfirmed) return;
         console.log('Export started');
@@ -163,6 +163,7 @@ export function initTimer() {
     startStopButton.addEventListener('click', toggleTimer);
     resetButton.addEventListener('click', reset);
     lapButton.addEventListener('click', recordRes);
+    exportButton.addEventListener('click', exportResults);
 
     loadSavedRace();
     window.addEventListener('online', handleOnlineRecovery);

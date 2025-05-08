@@ -4,7 +4,7 @@
         <img src="images/icons8-back-96.png" alt="Back">
     </div>
 
-    <a href="/" class="logo" id="home">
+    <a href="/" class="logo nav-button" id="home">
         <img src="images/rLogo.png" alt="Logo">
     </a>
 
