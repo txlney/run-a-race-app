@@ -1,4 +1,4 @@
-import { formatTime } from '../utils.js';
+import { formatDate } from './utils.js';
 
 export function initRaceDetails(raceId) {
 
@@ -8,14 +8,15 @@ export function initRaceDetails(raceId) {
             if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
     
             const data = await response.json();
+            console.log(`Retrieved data for race: ${raceId}`);
     
             // set race title and add cards for each runner in the race
-            document.querySelector('#race-title').textContent = `Race ${raceId} - ${new Date(data.timestamp).toLocaleDateString()}`;
+            document.querySelector('#race-title').textContent = `Race ${raceId} - ${formatDate(new Date(data.timestamp).toLocaleDateString())}`;
             document.querySelector('#race-details-container').innerHTML = `
                 ${data.results.map(result => `
                     <div class="result-card">
-                        <span class="position">${result.position}.</span>
-                        <span class="time">${result.time}</span>
+                        <span class="res-position">${result.position}.</span>
+                        <span class="res-time">${result.time}</span>
                     </div>
                 `).join('')}
             `;

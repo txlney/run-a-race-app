@@ -1,4 +1,4 @@
-import { formatTime } from '../utils.js';
+import { formatTime } from './utils.js';
 
 export function initTimer() {
 
@@ -49,6 +49,7 @@ export function initTimer() {
         localStorage.removeItem('currentRace');
     }
 
+    // update results display
     function displayRes() {
         resList.innerHTML = '';
     
@@ -112,6 +113,7 @@ export function initTimer() {
         }
     }
 
+    // save current state of race to local storage
     function saveRaceState() {
         const raceData = {
             startTime: startTime,
@@ -122,6 +124,7 @@ export function initTimer() {
         localStorage.setItem('currentRace', JSON.stringify(raceData));
     }
 
+    // load any saved race in local storage
     function loadSavedRace() {
         try {
             const savedRace = localStorage.getItem('currentRace');

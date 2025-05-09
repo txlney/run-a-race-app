@@ -11,4 +11,5 @@
     <div class="nav-button" id="settings">
         <img src="images/icons8-settings-96.png" alt="Settings">
     </div>
+    
 </nav>

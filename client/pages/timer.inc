@@ -1,4 +1,5 @@
 <section id="screen-timer" class="screen">
+
     <div class="timer-display">
         <div class="stopwatch-display" id="stopwatch">00:00:00</div>
         <button id="reset" title="Reset">Reset</button>
@@ -20,4 +21,5 @@
             <i class="fas fa-stopwatch"></i>
         </button>
     </footer>
+    
 </section>

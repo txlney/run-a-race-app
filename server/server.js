@@ -2,7 +2,7 @@ import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { formatDate } from '../client/utils.js';
+import { formatDate } from '../client/js/utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -45,6 +45,10 @@ app.post('/api/results', (req, res) => {
     res.status(200).send('Results saved.');
 });
 
+/* =====================
+    app.get functions
+===================== */
+
 // retrieve list of all races
 function getRaces(req, res) {
     try {
@@ -66,7 +70,7 @@ function getRaces(req, res) {
     } catch (error) {
         res.status(500).send('Error loading races', error.message);
     }
-};
+}
 
 // retrieve details for each race
 function getRace(req, res) {
@@ -80,24 +84,26 @@ function getRace(req, res) {
     } catch (error) {
         res.status(500).send('Error loading race details');
     }
-};
+}
 
+// update race results
 function updateResults(req, res) {
     res.json({
         lastModified: lastResultUpdate,
         activeRaces: fs.readdirSync('./data').length
     });
-};
+}
 
 app.get('/api/races', getRaces);
 app.get('/api/results/:raceId', getRace);
 app.get('/api/results/updates', updateResults);
 
+// handles client-side routing e.g. refreshes
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 const port = 8080;
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server is listening on http://localhost:${port}`);
 });

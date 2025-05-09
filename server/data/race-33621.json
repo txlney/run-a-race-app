@@ -1,0 +1,45 @@
+{
+  "timestamp": "2025-05-09T18:57:13.636Z",
+  "results": [
+    {
+      "position": 1,
+      "time": "00:00:05"
+    },
+    {
+      "position": 2,
+      "time": "00:00:05"
+    },
+    {
+      "position": 3,
+      "time": "00:00:06"
+    },
+    {
+      "position": 4,
+      "time": "00:00:07"
+    },
+    {
+      "position": 5,
+      "time": "00:00:10"
+    },
+    {
+      "position": 6,
+      "time": "00:00:11"
+    },
+    {
+      "position": 7,
+      "time": "00:00:12"
+    },
+    {
+      "position": 8,
+      "time": "00:00:13"
+    },
+    {
+      "position": 9,
+      "time": "00:00:17"
+    },
+    {
+      "position": 10,
+      "time": "00:00:18"
+    }
+  ]
+}

@@ -10,6 +10,7 @@
     --red-hover: #e3301c;
     --blue: #3498db;
     --blue-hover: #2980b9;
+    --yellow: #e7ca25;
     --transition: 0.3s ease;
 }
 
@@ -92,6 +93,34 @@ body {
 
 .nav-button:hover {
     opacity: 0.8;
+}
+
+/* Login */
+
+#login-page {
+    text-align: center;
+    margin-top: 50px;
+}
+
+#login-form {
+    display: inline-block;
+    text-align: left;
+}
+
+#login-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#login-form input {
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 5px;
+}
+
+#login-form button {
+    width: 100%;
+    padding: 5px;
 }
 
 /* Index */
@@ -228,7 +257,7 @@ body {
 }
 
 .result-card {
-    background: rgb(36, 36, 36);
+    background: var(--dark-grey);
     border-radius: 8px;
     padding: 12px 15px;
     display: flex;
@@ -238,12 +267,12 @@ body {
 
 .position {
     font-weight: bold;
-    color: #e7ca25;
+    color: var(--yellow);
 }
 
 .time {
     font-weight: bold;
-    color: white;
+    color: var(--white);
 }
 
 /* Timer Controls */
@@ -283,7 +312,7 @@ body {
 
 /* previous races */
 
-#race-history {
+#screen-previous-races {
     padding: 20px;
     overflow: auto;
 }
@@ -350,3 +379,46 @@ body {
 
 /* race details */
 
+#screen-race-details {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: var(--white);
+    color: var(--dark-grey);
+    overflow-y: auto;
+}
+
+#race-details-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--white);
+    color: var(--dark-grey);
+    text-align: center;
+}
+
+#race-title {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--dark-grey);
+}
+
+#race-details-container {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px;
+}
+
+#race-details-container .result-card {
+    padding: 25px 25px;
+    font-size: 1.5em;
+    font-weight: bold;
+    background-color: var(--light-grey);
+    color: var(--dark-grey);
+}

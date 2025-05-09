@@ -1,5 +1,5 @@
 export function initPreviousRaces() {
-    // load list of previous races
+
     async function loadRaceList() {
         console.log('Loading races...');
 
@@ -11,6 +11,8 @@ export function initPreviousRaces() {
             }
 
             const races = await response.json();
+            console.log('Retrieved races:', JSON.stringify(races, null, 2));
+
             const raceList = document.querySelector('#race-list');
             const noRacesMsg = document.querySelector('#no-races-msg');
 
@@ -44,6 +46,7 @@ export function initPreviousRaces() {
         }
     }
 
+    // direct to race-details page for specific race
     function handleRaceButton(event) {
         const button = event.target.closest('.race-btn');
         if (button) {

@@ -20,7 +20,12 @@ export async function initNavbar() {
 
     document.querySelector('#home').addEventListener('click', e => {
         e.preventDefault();
-        window.appRoutes['/']?.();
+        const username = localStorage.getItem('username');
+        if (username) {
+            window.appRoutes['/']?.();
+        } else {
+            window.appRoutes['/login']?.();
+        }
     });
 
     document.querySelector('#settings').addEventListener('click', () => {
