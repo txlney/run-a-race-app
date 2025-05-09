@@ -44,7 +44,6 @@ export function initTimer() {
         stopwatchDisplay.textContent = '00:00:00';
         startStopButton.innerHTML = '<i class="fas fa-play"></i>';
         startStopButton.style.backgroundColor = '#2ecc71';
-        raceResultsHeader.innerHTML = '<h2>Race Results</h2>';
         resTimes = [];
         displayRes();
         localStorage.removeItem('currentRace');

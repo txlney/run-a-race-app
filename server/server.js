@@ -46,7 +46,7 @@ app.post('/api/results', (req, res) => {
 });
 
 // retrieve list of all races
-app.get('/api/races', (req, res) => {
+function getRaces(req, res) {
     try {
         const files = fs.readdirSync(path.join(__dirname, 'data'));
 
@@ -56,19 +56,20 @@ app.get('/api/races', (req, res) => {
             return {
                 id: file.replace('race-', '').replace('.json', ''),
                 date: formatDate(new Date(data.timestamp).toLocaleDateString()),
-                time: new Date(data.timestamp).toLocaleTimeString()
+                time: new Date(data.timestamp).toLocaleTimeString(),
+                resultCount: data.results?.length || 0
             };
         })
 
-        res.json(races);
+        res.status(200).json(races);
 
     } catch (error) {
-        res.status(500).send('Error loading race list');
+        res.status(500).send('Error loading races', error.message);
     }
-});
+};
 
 // retrieve details for each race
-app.get('/api/results/:raceId', (req, res) => {
+function getRace(req, res) {
     try {
         const filePath = path.join(__dirname, 'data', `race-${req.params.raceId}.json`);
         if (!fs.existsSync(filePath)) {
@@ -79,20 +80,24 @@ app.get('/api/results/:raceId', (req, res) => {
     } catch (error) {
         res.status(500).send('Error loading race details');
     }
+};
+
+function updateResults(req, res) {
+    res.json({
+        lastModified: lastResultUpdate,
+        activeRaces: fs.readdirSync('./data').length
+    });
+};
+
+app.get('/api/races', getRaces);
+app.get('/api/results/:raceId', getRace);
+app.get('/api/results/updates', updateResults);
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 const port = 8080;
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
-});
-
-app.get('/api/results/updates', (req, res) => {
-    res.json({
-        lastModified: lastResultUpdate,
-        activeRaces: fs.readdirSync('./data').length
-    });
-});
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/index.html'));
 });

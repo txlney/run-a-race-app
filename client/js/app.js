@@ -23,7 +23,7 @@ import { fetchRaceData } from './data.js';
 async function loadPage(page, param) {
 
     try {
-        const response = await fetch(`includes/${page}.inc`);
+        const response = await fetch(`pages/${page}.inc`);
 
         const html = await response.text();
         document.querySelector('#app').innerHTML = html;

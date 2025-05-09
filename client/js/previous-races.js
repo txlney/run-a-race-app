@@ -1,8 +1,15 @@
 export function initPreviousRaces() {
     // load list of previous races
     async function loadRaceList() {
+        console.log('Loading races...');
+
         try {
             const response = await fetch('/api/races');
+
+            if (!response.ok) {
+                throw new Error(`Server returned ${response.status}`);
+            }
+
             const races = await response.json();
             const raceList = document.querySelector('#race-list');
             const noRacesMsg = document.querySelector('#no-races-msg');
@@ -18,7 +25,7 @@ export function initPreviousRaces() {
             } else {
                 noRacesMsg.classList.add('hidden');
 
-                // add a button fro each race saved
+                // add a button for each race saved
                 raceList.innerHTML = races.map(race =>
                     `<div>
                         <button class="race-btn" data-id="${race.id}">

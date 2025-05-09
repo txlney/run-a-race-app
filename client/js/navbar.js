@@ -1,6 +1,6 @@
 export async function loadNavbar() {
     try {
-        const response = await fetch('includes/navbar.inc');
+        const response = await fetch('pages/navbar.inc');
         if (response.ok) {
             const text =  await response.text();
             document.body.insertAdjacentHTML('afterbegin', text);
