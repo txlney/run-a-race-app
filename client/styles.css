@@ -1,9 +1,9 @@
 :root {
-    --navbar-background: #333333;
+    --navbar-background: #202020;
     --navbar-height: 70px;
     --white: #f4f4f4;
     --light-grey: #d4d4d4;
-    --dark-grey: #262626;
+    --dark-grey: #222222;
     --green: #2abb67;
     --green-hover: #26a65b;
     --red: #e74c3c;
@@ -12,6 +12,25 @@
     --blue-hover: #2980b9;
     --yellow: #e7ca25;
     --transition: 0.3s ease;
+    --tophalf-bg: #f4f4f4;
+    --bottomhalf-bg: #d4d4d4;
+    --timer-bg: #f4f4f4;
+    --timer: #222222;
+    --race-item: #d4d4d4;
+    --race-item-hover: #c5c5c5;
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+    --white: #262626;
+    --light-grey: #252525;
+    --dark-grey: #d4d4d4;
+    --tophalf-bg: #2e2e2e;
+    --bottomhalf-bg: #242424;
+    --timer-bg: #262626;
+    --timer: #f4f4f4;
+    --race-item: #363636;
+    --race-item-hover: #424242;
 }
 
 body {
@@ -44,6 +63,19 @@ body {
     visibility: hidden !important;
 }
 
+.button {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    font-size: 1em;
+    font-weight: bold;
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color var(--transition);
+}
+
 /* Navigation bar */
 
 .app-navbar {
@@ -52,7 +84,7 @@ body {
     align-items: center;
     background-color: var(--navbar-background);
     color: var(--white);
-    padding: 10px 20px;
+    padding: 0 20px;
     height: var(--navbar-height);
     flex-shrink: 0;
     position: relative;
@@ -98,29 +130,57 @@ body {
 /* Login */
 
 #login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - var(--navbar-height));
+    background-color: #f4f4f4;
+    color: #222222;
     text-align: center;
-    margin-top: 50px;
+    padding: 0px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+#login-logo img {
+    width: 150px;
+    height: auto;
+    margin-bottom: 20px;
 }
 
 #login-form {
-    display: inline-block;
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+    gap: 15px;
 }
 
 #login-form label {
-    display: block;
-    margin-bottom: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #222222;
+    align-self: flex-start;
 }
 
 #login-form input {
-    margin-bottom: 10px;
     width: 100%;
-    padding: 5px;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #d4d4d4;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
 #login-form button {
-    width: 100%;
-    padding: 5px;
+    color: var(--white);
+    background-color: var(--blue);
+}
+
+#login-form button:hover {
+    background-color: var(--blue-hover);
 }
 
 /* Index */
@@ -145,7 +205,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: var(--navbar-background);
+    color: var(--dark-grey);
     font-size: 10em;
     cursor: pointer;
     transition: opacity var(--transition);
@@ -158,11 +218,11 @@ body {
 }
 
 #top-half {
-    background-color: var(--white);
+    background-color: var(--tophalf-bg);
 }
 
 #bottom-half {
-    background-color: var(--light-grey);
+    background-color: var(--bottomhalf-bg);
 }
 
 .index-half-screen:hover {
@@ -184,13 +244,13 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px 40px;
-    background-color: var(--white);
+    background-color: var(--timer-bg);
 }
 
 .stopwatch-display {
     font-size: 5em;
     font-weight: bold;
-    color: var(--navbar-background);
+    color: var(--timer);
 }
 
 .timer-display button {
@@ -215,14 +275,14 @@ body {
 .results-section {
     flex: 1;
     min-height: 0;
-    background-color: var(--navbar-background);
+    background-color: #333333;
     display: flex;
     flex-direction: column;
     overflow: hidden;
 }
 
 .results-header {
-    background-color: var(--dark-grey);
+    background-color: var(--navbar-background);
     padding: 20px 20px;
     text-align: center;
     color: var(--white);
@@ -257,12 +317,11 @@ body {
 }
 
 .result-card {
-    background: var(--dark-grey);
+    background: #252525;
     border-radius: 8px;
     padding: 12px 15px;
     display: flex;
     justify-content: space-between;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .position {
@@ -272,7 +331,7 @@ body {
 
 .time {
     font-weight: bold;
-    color: var(--white);
+    color: #f4f4f4;
 }
 
 /* Timer Controls */
@@ -314,10 +373,11 @@ body {
 
 #screen-previous-races {
     padding: 20px;
+    background-color: var(--white);
     overflow: auto;
 }
 
-.race-list {
+#race-list {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -326,40 +386,66 @@ body {
     list-style: none;
 }
 
-.no-races {
+.no-races-msg {
     text-align: center;
-    
 }
 
-.race-btn {
-    font-family: 'Arial', 'sans-serif';
-    font-weight: bold;
-    font-size: 1.2em;
-    color: #262626;
-    width: 100%;
-    padding: 15px 20px;
-    background: var(--light-grey);
-    margin-bottom: 20px;
+.race-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px;
+    background-color: var(--race-item);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: background-color var(--transition);
+}
+
+.delete-button {
+    flex-shrink: 0;
+    background-color: var(--red);
+    color: var(--white);
     border: none;
-    border-radius: 6px;
-    text-align: left;
+    border-radius: 5px;
+    padding: 10px;
+    margin-right: 5px;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background: var(--red-hover);
+}
+
+.race-button {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 10px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 1em;
+    color: var(--dark-grey);
+    background-color: var(--race-item);
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color var(--transition);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
-.race-btn:hover {
-    background: #c5c5c5;
+.race-button:hover {
+    background: var(--race-item-hover);
 }
 
-.race-btn h3 {
+.race-button h3 {
     margin: 5px 0 5px 0;
     font-size: 1.2em;
 }
 
-.race-btn h4 {
+.race-button h4 {
     margin: 0;
     font-weight: normal;
 }
@@ -419,6 +505,71 @@ body {
     padding: 25px 25px;
     font-size: 1.5em;
     font-weight: bold;
-    background-color: var(--light-grey);
+    background-color: var(--race-item);
+    color: var(--timer);
+}
+
+/* Settings */
+
+#screen-settings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - var(--navbar-height));
+    background-color: var(--white);
     color: var(--dark-grey);
+    text-align: center;
+}
+
+#screen-settings h1 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#settings-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+#theme-toggle-button {
+    color: var(--white);
+    background-color: var(--dark-grey);
+}
+
+#logout-button {
+    padding: 10px 50px;
+    color: var(--white);
+    background-color: var(--red);
+}
+
+#logout-button:hover {
+    background-color: var(--red-hover);
+}
+
+/* Footer */
+
+#logged-in-message {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    color: #d4d4d4;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 100;
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    #logged-in-message {
+        font-size: 0.6em;
+        bottom: 5px;
+        left: 5px;
+        padding: 4px 8px;
+    }
 }

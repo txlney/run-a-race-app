@@ -22,15 +22,15 @@ if (!fs.existsSync(dataDir)) {
 let lastResultUpdate = Date.now();
 
 // receive exported results
-app.post('/api/results', (req, res) => {
+function importResults(req, res) {
     lastResultUpdate = Date.now();
     const raceData = {
         timestamp: new Date().toISOString(),
-        results: req.body.results
+        results: req.body.results,
+        user: req.body.user
     };
     const raceId = req.body.raceId;
     console.log(`Received race ${raceId} with results: ${raceData.results}`);
-    
     try {
 
         // write results to 'data' directory
@@ -43,11 +43,26 @@ app.post('/api/results', (req, res) => {
     
 
     res.status(200).send('Results saved.');
-});
+}
 
-/* =====================
-    app.get functions
-===================== */
+// delete race from server
+function deleteRace(req, res) {
+    const raceId = req.params.raceId;
+    const filePath = path.join(__dirname, 'data', `race-${raceId}.json`);
+
+    try {
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+            console.log(`Race ${raceId} deleted`);
+            res.status(200).send(`Race ${raceId} deleted`);
+        } else {
+            res.status(404).send('Race not found');
+        }
+    } catch (error) {
+        console.error(`Error deleting Race ${raceId}: ${error.message}`);
+        res.status(500).send('Error deleting race');
+    }
+}
 
 // retrieve list of all races
 function getRaces(req, res) {
@@ -61,7 +76,8 @@ function getRaces(req, res) {
                 id: file.replace('race-', '').replace('.json', ''),
                 date: formatDate(new Date(data.timestamp).toLocaleDateString()),
                 time: new Date(data.timestamp).toLocaleTimeString(),
-                resultCount: data.results?.length || 0
+                resultCount: data.results?.length || 0,
+                user: data.user || 'Unknown'
             };
         })
 
@@ -97,6 +113,8 @@ function updateResults(req, res) {
 app.get('/api/races', getRaces);
 app.get('/api/results/:raceId', getRace);
 app.get('/api/results/updates', updateResults);
+app.delete('/api/races/:raceId', deleteRace);
+app.post('/api/results', importResults);
 
 // handles client-side routing e.g. refreshes
 app.get('*', (req, res) => {

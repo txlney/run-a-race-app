@@ -2,7 +2,16 @@ import { initTimer } from './timer.js';
 import { initNavbar, loadNavbar } from './navbar.js';
 import { initPreviousRaces } from './previous-races.js';
 import { initRaceDetails } from './race-details.js';
-import { fetchRaceData } from './data.js';
+import { updateLoggedInMessage } from './utils.js';
+import { initSettings } from './settings.js';
+import { initLogin } from './login.js';
+
+// set the theme based on system/saved preference
+(function initialiseTheme() {
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const savedTheme = localStorage.getItem('theme') || systemTheme;
+    document.documentElement.setAttribute('data-theme', savedTheme);
+})();
 
 (async () => {
 
@@ -31,8 +40,8 @@ window.appRoutes = {
     '/settings': () => loadPage('settings')
 };
 
+// core load page function
 async function loadPage(page, param, addToHistory = true) {
-
     try {
         const response = await fetch(`pages/${page}.inc`);
 
@@ -47,7 +56,7 @@ async function loadPage(page, param, addToHistory = true) {
         switch(page) {
             case 'login':
                 console.log('Loading login...');
-                setupLoginPage();
+                initLogin();
                 break;
             case 'timer':
                 console.log('Loading timer...');
@@ -67,7 +76,7 @@ async function loadPage(page, param, addToHistory = true) {
                 break;
             case 'settings':
                 console.log('Loading settings...');
-                setupSettingsPage();
+                initSettings();
                 break;
         }
 
@@ -81,6 +90,8 @@ async function loadPage(page, param, addToHistory = true) {
         const settingsButton = document.querySelector('#settings');
         backButton.classList.toggle('hidden', page === 'home' || page === 'login');
         settingsButton.classList.toggle('hidden', page === 'settings' || page === 'login');
+
+        updateLoggedInMessage();
 
     } catch (error) {
         console.error(`Failed to load ${page}:`, error);
@@ -106,46 +117,11 @@ function setupHomePage() {
     });
 }
 
-// initialise login page
-function setupLoginPage() {
-    const acceptedUsernames = ['tom', 'seb', 'george'];
-    const loginForm = document.querySelector('#login-form');
-
-    loginForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const username = document.querySelector('#username').value;
-
-        if (acceptedUsernames.includes(username)) {
-            console.log(`Logged in as: ${username}`);
-            localStorage.setItem('username', username);
-            appRoutes['/']();
-        } else {
-            alert('Invalid username. Please try again.\nAccepted usernames for now: tom, seb, george');
-        }
-    });
-}
-
-function setupSettingsPage() {
-    const logoutButton = document.querySelector('#logout-button');
-
-    logoutButton.addEventListener('click', () => {
-        localStorage.removeItem('username');
-        console.log('User logged out');
-        appRoutes['/login']();
-    });
-}
-
 // handles browser back/forward buttons
 window.addEventListener('popstate', event => {
     const state = event.state || {};
-    const page = state.page || window.location.pathname.slice(1);
+    const page = state.page || window.location.pathname.slice(1) || 'home';
     const param = state.param || null;
 
-    const username = localStorage.getItem('username');
-    if (!username && path !== '/login') {
-        history.replaceState({}, '', '/login');
-        appRoutes['/login']();
-    } else {
-        appRoutes[`/${page}`]?.(param, false);
-    }
+    appRoutes[`/${page}`]?.(param, false);
 });

@@ -16,12 +16,14 @@ export function initTimer() {
     const resList = document.querySelector('#results-list');
     const exportButton = document.querySelector('#export');
 
+    // update stopwatch display in the format hh:mm:ss
     function updateDisplay() {
         const currentTime = Date.now();
         elapsedTime = currentTime - startTime;
         stopwatchDisplay.textContent = formatTime(elapsedTime);
     }
 
+    // start/stop timer
     function toggleTimer() {
         if (startStopButton.innerHTML.includes('fa-play')) {
             startTime = Date.now() - elapsedTime;
@@ -38,6 +40,7 @@ export function initTimer() {
         saveRaceState();
     }
 
+    // reset timer and results - clear local storage
     function reset() {
         clearInterval(timerInterval);
         elapsedTime = 0;
@@ -64,6 +67,7 @@ export function initTimer() {
         })
     }
 
+    // record and display results
     function recordRes() {
         const res = {
             position: resTimes.length + 1,
@@ -74,6 +78,7 @@ export function initTimer() {
         saveRaceState();
     }
 
+    // export results to server
     async function exportResults() {
         if (resTimes.length === 0) {
             alert('No results to export');
@@ -88,7 +93,8 @@ export function initTimer() {
         const tempId = Date.now().toString();
         const dataToSend = {
             raceId: parseFloat(tempId.slice(tempId.length - 5)),
-            results: resTimes
+            results: resTimes,
+            user: localStorage.getItem('username')
         };
         try {
             // post race data to server

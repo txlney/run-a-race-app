@@ -15,11 +15,22 @@ export async function loadNavbar() {
 
 export async function initNavbar() {
     document.querySelector('#back').addEventListener('click', () => {
-        history.back();
+        const currentPath = window.location.pathname;
+
+        // had issues with back button, had to hardcode these paths
+        if (currentPath === '/timer' || currentPath === '/previous-races') {
+            appRoutes['/']();
+        } else if (currentPath.startsWith('/race-details')) {
+            appRoutes['/previous-races']();
+        } else {
+            history.back();
+        }
     });
 
     document.querySelector('#home').addEventListener('click', e => {
         e.preventDefault();
+
+        // redirect to home page if logged in
         const username = localStorage.getItem('username');
         if (username) {
             window.appRoutes['/']?.();
@@ -29,6 +40,13 @@ export async function initNavbar() {
     });
 
     document.querySelector('#settings').addEventListener('click', () => {
-        window.appRoutes['/settings']?.() || console.warn('Settings page not yet implemented');
+
+        // redirect to settings page if logged in
+        const username = localStorage.getItem('username');
+        if (username) {
+            window.appRoutes['/settings']?.();
+        } else {
+            window.appRoutes['/login']?.();
+        }
     });
 }
