@@ -27,26 +27,26 @@ I used both ChatGPT and Deepseek occasionally throughout the creation of my app 
 I had an issue when turning my app into an SPA. I ended up with some duplicate functions and mixed approaches to routing, which caused confusion and issues within the app. I used these prompts to help identify what the issue was, before modifying my code to fix it -
 
 >  within my app ive managed to get the app to navigate properly to the race-details page, however im struggling to see why it wont correctly navigate to the race-details page of the specific race that was clicked, what could be causing the issue?
-> 
->  The response to this prompt was initially not very helpful as I hadn't provided enough context with my existing code, so after that was provided, I was able to quickly see the issue with duplicate functions and app routing errors, which I could fix relatively quickly
+
+-  The response to this prompt was initially not very helpful as I hadn't provided enough context with my existing code, so after that was provided, I was able to quickly see the issue with duplicate functions and app routing errors, which I could fix relatively quickly
 
 >  sorry here is the relevant code from my race-details.js, i think maybe there are some conflicting functions?
-> 
->  This response was much more helpful as I had provided the context necessary to help the AI find what the problem was in my code, this is an example where it did provide some immediate solutions in the form of generated functions, however I didn't fully understand what the functions were doing straight away, so used further prompts to help me understand completely before implementing
+
+-  This response was much more helpful as I had provided the context necessary to help the AI find what the problem was in my code, this is an example where it did provide some immediate solutions in the form of generated functions, however I didn't fully understand what the functions were doing straight away, so used further prompts to help me understand completely before implementing
 
 ### Prompt(s) to develop light/dark mode functionality
 I knew I wanted my light/dark mode function from the beginning and had an idea with how it would have to be implemented but wasn't 100% sure on all the correct syntax and ways to make it function, so I used some prompts to give me a helping hand with the implementation -
 
 >  ive got the following css variables defined in my styles.css page and want to implement a dark/light mode which can be toggled within the app, can you help me with a simple method of implementing it? will the current variables work with what im trying to do?
-> 
->  This response was very helpful as I already had a base idea of what needed to be done so the extra little help was great and allowed me to quickly add the theme function to the app, it also allowed me to improve my CSS in general, using variables more often leading to less hard coded colour values, improving maintainability
+
+-  This response was very helpful as I already had a base idea of what needed to be done so the extra little help was great and allowed me to quickly add the theme function to the app, it also allowed me to improve my CSS in general, using variables more often leading to less hard coded colour values, improving maintainability
 
 ### Prompt(s) to develop the UI
 Further with my styles.css, I had an issue when moving the 'delete' button onto the previous races page. I knew the UI layout that I wanted, and for some reason I couldn't achieve it no matter what I tried, so I tried to use a prompt to help me with the problem -
 
 >  im trying to style the following page to have the current delete button on the right hand side with the race item to the left of it, however despite using flexbox i cant seem to get it to work how im intending, can you see what im doing wrong?
-> 
->  I asked a very similar prompt a couple times for this exact issue because every time the solutions were not working, and I eventually discovered the underlying problem on my own, which was very simple (i had defined an id but was calling a class in CSS) however the AI could not see the issue so in this case it may have been better to not rely on the AI to find my very small errors
+
+-  I asked a very similar prompt a couple times for this exact issue because every time the solutions were not working, and I eventually discovered the underlying problem on my own, which was very simple (i had defined an id but was calling a class in CSS) however the AI could not see the issue so in this case it may have been better to not rely on the AI to find my very small errors
 
 
 ## Overall State
