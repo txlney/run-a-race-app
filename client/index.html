@@ -6,16 +6,15 @@
     <title>Run A Race</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script type="module" src="index.js"></script>
 </head>
+
 <body>
-    <div class="split-screen">
-        <div id="top-half" class="index-half-screen">
-            <i id="stopwatch" class="fas fa-stopwatch"></i>
-        </div>
-        <div id="bottom-half" class="index-half-screen">
-            <i id="flag" class="fas fa-flag"></i>
-        </div>
-    </div>
+    <main id="app"></main>
+    <script type="module" src="/js/app.js"></script>
 </body>
+
+<footer id="logged-in-message" class="hidden">
+    Logged in as: <span id="username-display"></span>
+</footer>
+
 </html>

@@ -18,3 +18,25 @@ export function formatDate(dateString) {
     const formattedDate = `${parseInt(day, 10)} ${months[date.getMonth()]} ${year}`;
     return formattedDate;
 }
+
+// hide and show elements
+export function hideElement(selector) {
+    document.querySelector(selector)?.classList.add('hidden');
+}
+
+export function showElement(selector) {
+    document.querySelector(selector).classList.remove('hidden');
+}
+
+// displays current logged in user when logged in
+export function updateLoggedInMessage() {
+    const username = localStorage.getItem('username');
+    const loggedInMessage = document.querySelector('#logged-in-message');
+    const usernameDisplay = document.querySelector('#username-display');
+    if (username) {
+        usernameDisplay.textContent = username;
+        loggedInMessage.classList.remove('hidden');
+    } else {
+        loggedInMessage.classList.add('hidden');
+    }
+}

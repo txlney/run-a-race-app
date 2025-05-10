@@ -2,7 +2,7 @@ import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { formatDate } from '../client/utils.js';
+import { formatDate } from '../client/js/utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,15 +22,15 @@ if (!fs.existsSync(dataDir)) {
 let lastResultUpdate = Date.now();
 
 // receive exported results
-app.post('/api/results', (req, res) => {
+function importResults(req, res) {
     lastResultUpdate = Date.now();
     const raceData = {
         timestamp: new Date().toISOString(),
-        results: req.body.results
+        results: req.body.results,
+        user: req.body.user
     };
     const raceId = req.body.raceId;
     console.log(`Received race ${raceId} with results: ${raceData.results}`);
-    
     try {
 
         // write results to 'data' directory
@@ -43,10 +43,29 @@ app.post('/api/results', (req, res) => {
     
 
     res.status(200).send('Results saved.');
-});
+}
+
+// delete race from server
+function deleteRace(req, res) {
+    const raceId = req.params.raceId;
+    const filePath = path.join(__dirname, 'data', `race-${raceId}.json`);
+
+    try {
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+            console.log(`Race ${raceId} deleted`);
+            res.status(200).send(`Race ${raceId} deleted`);
+        } else {
+            res.status(404).send('Race not found');
+        }
+    } catch (error) {
+        console.error(`Error deleting Race ${raceId}: ${error.message}`);
+        res.status(500).send('Error deleting race');
+    }
+}
 
 // retrieve list of all races
-app.get('/api/races', (req, res) => {
+function getRaces(req, res) {
     try {
         const files = fs.readdirSync(path.join(__dirname, 'data'));
 
@@ -56,19 +75,21 @@ app.get('/api/races', (req, res) => {
             return {
                 id: file.replace('race-', '').replace('.json', ''),
                 date: formatDate(new Date(data.timestamp).toLocaleDateString()),
-                time: new Date(data.timestamp).toLocaleTimeString()
+                time: new Date(data.timestamp).toLocaleTimeString(),
+                resultCount: data.results?.length || 0,
+                user: data.user || 'Unknown'
             };
         })
 
-        res.json(races);
+        res.status(200).json(races);
 
     } catch (error) {
-        res.status(500).send('Error loading race list');
+        res.status(500).send('Error loading races', error.message);
     }
-});
+}
 
 // retrieve details for each race
-app.get('/api/results/:raceId', (req, res) => {
+function getRace(req, res) {
     try {
         const filePath = path.join(__dirname, 'data', `race-${req.params.raceId}.json`);
         if (!fs.existsSync(filePath)) {
@@ -79,16 +100,28 @@ app.get('/api/results/:raceId', (req, res) => {
     } catch (error) {
         res.status(500).send('Error loading race details');
     }
-});
+}
 
-const port = 8080;
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-});
-
-app.get('/api/results/updates', (req, res) => {
+// update race results
+function updateResults(req, res) {
     res.json({
         lastModified: lastResultUpdate,
         activeRaces: fs.readdirSync('./data').length
     });
+}
+
+app.get('/api/races', getRaces);
+app.get('/api/results/:raceId', getRace);
+app.get('/api/results/updates', updateResults);
+app.delete('/api/races/:raceId', deleteRace);
+app.post('/api/results', importResults);
+
+// handles client-side routing e.g. refreshes
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/index.html'));
+});
+
+const port = 8080;
+app.listen(port, () => {
+    console.log(`Server is listening on http://localhost:${port}`);
 });

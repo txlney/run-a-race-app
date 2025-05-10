@@ -1,23 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, inital-scale=1.0">
-    <title>Timer</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script type="module" src="timer.js"></script>
-</head>
-<body>
+<section id="screen-timer" class="screen">
 
     <div class="timer-display">
         <div class="stopwatch-display" id="stopwatch">00:00:00</div>
         <button id="reset" title="Reset">Reset</button>
     </div>
-    
+
     <div class="results-section">
         <div class="results-header" id="results-header">
-            <h2>Race Results</h2>
+            <button id="export" title="Export Results">Export Results</button>
         </div>
         <div class="results-list-container" id="results-list">
         </div>
@@ -31,6 +21,5 @@
             <i class="fas fa-stopwatch"></i>
         </button>
     </footer>
-
-</body>
-</html>
+    
+</section>
