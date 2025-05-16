@@ -5,6 +5,7 @@ export function initTimer() {
     let startTime;
     let elapsedTime = 0;
     let timerInterval;
+    let isRunning = false;
     let wasRunning = false;
     let resTimes = [];
 
@@ -25,17 +26,19 @@ export function initTimer() {
 
     // start/stop timer
     function toggleTimer() {
-        if (startStopButton.innerHTML.includes('fa-play')) {
+        if (!isRunning) {
             startTime = Date.now() - elapsedTime;
             timerInterval = setInterval(updateDisplay, 100);
-            startStopButton.innerHTML = '<i class="fas fa-pause"></i>';
+            startStopButton.innerHTML = '<img src="images/icons8-pause-white.png" alt="Pause" class="icon">';
             startStopButton.style.backgroundColor = '#e74c3c';
+            isRunning = true;
         } else {
             clearInterval(timerInterval);
-            startStopButton.innerHTML = '<i class="fas fa-play"></i>';
+            startStopButton.innerHTML = '<img src="images/icons8-play-white.png" alt="Play" class="icon">';
             startStopButton.style.backgroundColor = '#2abb67';
             wasRunning = false;
             elapsedTime = Date.now() - startTime;
+            isRunning = false;
         }
         saveRaceState();
     }
@@ -45,7 +48,7 @@ export function initTimer() {
         clearInterval(timerInterval);
         elapsedTime = 0;
         stopwatchDisplay.textContent = '00:00:00';
-        startStopButton.innerHTML = '<i class="fas fa-play"></i>';
+        startStopButton.innerHTML = '<img src="images/icons8-play-white.png" alt="Play" class="icon">';
         startStopButton.style.backgroundColor = '#2ecc71';
         resTimes = [];
         displayRes();

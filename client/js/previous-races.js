@@ -54,7 +54,7 @@ export function initPreviousRaces() {
                     <h4>ID ${race.id}</h4>
                 </button>
                 <button class="delete-button" data-id="${race.id}" title="Delete Race">
-                    <i class="fa-solid fa-trash-can"></i>
+                    <img src="images/icons8-trash-white.png" alt="Delete" class="delete-icon">
                 </button>
             </div>
         `;

@@ -15,10 +15,10 @@
 
     <footer class="timer-footer">
         <button id="startStop" title="Start/Stop">
-            <i class="fas fa-play"></i>
+            <img src="images/icons8-play-white.png" alt="Play" class="icon">
         </button>
         <button id="lap" title="Lap">
-            <i class="fas fa-stopwatch"></i>
+            <img src="images/icons8-stopwatch-white.png" alt="Play" class="icon">
         </button>
     </footer>
     
